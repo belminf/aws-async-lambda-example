@@ -85,13 +85,6 @@ Resources:
     Properties:
       CloudWatchRoleArn: !GetAtt CloudWatchLogsRole.Arn
 
-  HelloWorldResource:
-    Type: AWS::ApiGateway::Resource
-    Properties:
-      RestApiId: !Ref HelloWorldAPI
-      ParentId: !GetAtt HelloWorldAPI.RootResourceId
-      PathPart: "hello"
-
   HelloWorldPost:
     DependsOn: LambdaPermission
     Type: AWS::ApiGateway::Method
@@ -106,29 +99,14 @@ Resources:
           - StatusCode: 200
         RequestParameters:
            integration.request.header.X-Amz-Invocation-Type: "'Event'"
-      ResourceId: !Ref HelloWorldResource
+      ResourceId: !GetAtt HelloWorldAPI.RootResourceId
       RestApiId: !Ref HelloWorldAPI
       MethodResponses:
-      - StatusCode: 200
+        - StatusCode: 200
 
   APIDeployment:
     Type: AWS::ApiGateway::Deployment
     DependsOn: HelloWorldPost
     Properties:
       RestApiId: !Ref HelloWorldAPI
-      StageName: MyStage
-
-  HelloWorldAPIStage:
-    DependsOn:
-      - APIGatewayAccount
-    Type: AWS::ApiGateway::Stage
-    Properties:
-      DeploymentId: !Ref APIDeployment
-      MethodSettings:
-        -
-          DataTraceEnabled: true
-          HttpMethod: "*"
-          LoggingLevel: INFO
-          ResourcePath: "/*"
-      RestApiId: !Ref HelloWorldAPI
-      StageName: LATEST`
+      StageName: LATEST
