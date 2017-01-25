@@ -4,11 +4,13 @@ Example CloudFormation stack with an API Gateway method that invokes a Lambda fu
 
 # Useful commands
 
+## Deploy stack
 To deploy via `aws-cli`:
 
     aws cloudformation create-stack --stack-name aws-async-lambda-example --capabilities CAPABILITY_NAMED_IAM --template-body file://cfn-template.yaml
 
-To drill and get the resulting method specifications, first you need the REST API ID (`id` field):
+## Drilling down
+To get the resulting method configuration, first you need the REST API ID (`id` field):
 
     aws apigateway get-rest-apis
 
