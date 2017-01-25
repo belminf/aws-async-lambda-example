@@ -24,10 +24,13 @@ Resources:
     Properties:
       Code:
         ZipFile: |
-            from time import sleep
-            def lambda_handler(event, context):
-              sleep(10)
-              return {'headers': {}, 'body': 'Hello world'}
+          from __future__ import print_function
+          from time import sleep
+          def lambda_handler(event, context):
+            print('Got: key={}'.format(event.get('key')))
+            sleep(10)
+            print('Finished sleeping')
+            return {'headers': {}, 'body': 'Hello world'}
       Timeout: 30
       Description: Hello world
       Handler: index.lambda_handler
