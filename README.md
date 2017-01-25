@@ -16,7 +16,7 @@ To get the resulting method configuration, first you need the REST API ID (`id` 
 
 Then, you also need the resource ID (`id` field)
 
-    aws apigateway get-resources --rest-api-id <REST API>
+    aws apigateway get-resources --rest-api-id <REST API ID>
 
 Finally, with both those IDs, you could retrieve the method description:
 
